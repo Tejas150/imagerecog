@@ -4,12 +4,12 @@ import './App.css';
 import Clarifai from 'clarifai';
 import Navbar from './component/navbar/navbar';
 import Logo from './component/logo/logo'
-import Imageform from './component/imagelinkform/imageform'
+import Imageform from './component/imagelinkform/Imageform'
 import Rank from './component/rank/rank'
 import Frameimg from './component/frameimg/frameimg'
 
 const app=new Clarifai.App({
-  apiKey:' 8ceb033c08e7479e9f37b92e06254394'
+  apiKey:'8ceb033c08e7479e9f37b92e06254394'
 });
 const params={
   
@@ -29,23 +29,23 @@ class App extends Component {
   constructor()
   {
     super();
-    this.state={ input:" " ,
-                imageurl:" "}
+    this.state={ input:'' ,
+                imageurl:''
+              }
   }
 
   onchanges=(event)=>{
      this.setState({input:event.target.value})
-     console.log(event.target.values)
+     console.log(event.target.value);
   }
 
   onSubmit = () => {
-    console.log("click")
     this.setState({imageUrl: this.state.input})
-    // app.models.predict(
-    //   Clarifai.FACE_DETECT_MODEL, 
-    //   this.state.input)
-    //     .then(response => console.log(response))   
-    //     .catch(err => console.log(err))
+    app.models.predict(
+      Clarifai.FACE_DETECT_MODEL, 
+      this.state.input)
+        .then(response => console.log(response))   
+        .catch(err => console.log(err))
     console.log(this.state.input)
   }
  render()
@@ -58,9 +58,7 @@ class App extends Component {
      <Navbar/>
      <Logo/>
      <Rank/>
-     
-     
-     <Imageform onchanges={this.onchanges} onsubmit={this.onsubmit}/>
+     <Imageform onchanges={this.onchanges} onsubmit={this.onSubmit}/>
      <Frameimg input={this.state.input}/>
            
    
